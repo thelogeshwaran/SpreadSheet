@@ -1,0 +1,126 @@
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem;
+  color: #000;
+}
+
+.gridContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  color: #000;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.toolbar button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  background: #f0f0f0;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  overflow: auto;
+  max-height: 80vh;
+}
+
+.headerRow {
+  display: flex;
+  background: #f5f5f5;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.row {
+  display: flex;
+}
+
+.corner {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.header {
+  width: 100px;
+  height: 40px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background: #f5f5f5;
+  position: sticky;
+  top: 0;
+}
+
+.rowHeader {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background: #f5f5f5;
+  position: sticky;
+  left: 0;
+}
+
+.cell {
+  width: 100px;
+  height: 40px;
+  border: 1px solid #ddd;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: white;
+}
+
+.cell:hover {
+  background: #f9f9f9;
+}
+
+.cell.active {
+  background: #e6f7ff;
+  border-color: #1890ff;
+}
+
+.cell.referenced {
+  background: #fff7e6;
+  border-color: #faad14;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: inherit;
+  font-family: inherit;
+  color: #000;
+}
