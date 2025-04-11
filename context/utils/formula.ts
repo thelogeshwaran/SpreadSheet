@@ -19,17 +19,13 @@ export const computeCellValue = (
 
   try {
     let formula = cell.formula;
-    console.log("formula", cell);
+    const references = cell.references || [];
 
     // Replace each reference with its value
-    cell.references?.forEach((ref) => {
+    references.forEach((ref) => {
       const refCell = grid.cells[ref];
       let value: string | number = refCell?.content || "0";
 
-      dispatch({
-        type: "UPDATE_REFERENCES",
-        payload: { id: ref, references: cell.id },
-      });
       if (refCell?.formula) {
         value = computeCellValue(refCell, grid, dispatch);
       }
@@ -49,14 +45,38 @@ export const computeCellValue = (
 
 export const updateComputedValues = (
   state: GridData,
-  dispatch: any
+  dispatch: Dispatch<Action>
 ): GridData => {
-  const newState = { ...state };
+  const newState = { ...state, cells: { ...state.cells } };
 
-  Object.keys(newState.cells).forEach((cellId) => {
-    const cell = newState.cells[cellId];
-    if (cell) {
-      cell.computed = computeCellValue(cell, newState, dispatch);
+  // First, update all cells that have formulas
+  Object.values(newState.cells).forEach((cell) => {
+    if (cell.formula) {
+      const computed = computeCellValue(cell, newState, dispatch);
+      newState.cells[cell.id] = {
+        ...cell,
+        computed,
+      };
+    }
+  });
+
+  // Then, update cells that reference the changed cells
+  const updatedCells = new Set<string>();
+  Object.values(newState.cells).forEach((cell) => {
+    if (cell.referencedBy?.length) {
+      cell.referencedBy.forEach((refId) => {
+        if (!updatedCells.has(refId)) {
+          const refCell = newState.cells[refId];
+          if (refCell?.formula) {
+            const computed = computeCellValue(refCell, newState, dispatch);
+            newState.cells[refId] = {
+              ...refCell,
+              computed,
+            };
+            updatedCells.add(refId);
+          }
+        }
+      });
     }
   });
 

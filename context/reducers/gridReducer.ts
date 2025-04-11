@@ -16,6 +16,20 @@ export const createGridReducer = (dispatch: Dispatch<Action>) => {
           referencedBy: [],
         };
 
+        // Clear old references
+        const oldReferences = cell.references || [];
+        oldReferences.forEach((ref) => {
+          const refCell = state.cells[ref];
+          if (refCell) {
+            refCell.referencedBy = refCell.referencedBy?.filter(
+              (refId) => refId !== id
+            );
+          }
+        });
+
+        // Extract new references
+        const newReferences = formula ? extractReferences(formula) : [];
+
         newState = {
           ...state,
           cells: {
@@ -24,10 +38,24 @@ export const createGridReducer = (dispatch: Dispatch<Action>) => {
               ...cell,
               content,
               formula,
-              references: formula ? extractReferences(formula) : [],
+              references: newReferences,
             },
           },
         };
+
+        // Update referencedBy for new references
+        newReferences.forEach((ref) => {
+          const refCell = newState.cells[ref] || {
+            id: ref,
+            content: "",
+            references: [],
+            referencedBy: [],
+          };
+          if (!refCell.referencedBy?.includes(id)) {
+            refCell.referencedBy = [...(refCell.referencedBy || []), id];
+          }
+          newState.cells[ref] = refCell;
+        });
 
         newState = updateComputedValues(newState, dispatch);
         break;
@@ -50,13 +78,16 @@ export const createGridReducer = (dispatch: Dispatch<Action>) => {
 
       case "UPDATE_REFERENCES": {
         const { id, references } = action.payload;
+        const cell = state.cells[id];
+        if (!cell) return state;
+
         newState = {
           ...state,
           cells: {
             ...state.cells,
             [id]: {
-              ...state.cells[id],
-              referencedBy: [references],
+              ...cell,
+              referencedBy: [...(cell.referencedBy || []), references],
             },
           },
         };

@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpreadSheet - A Modern Spreadsheet Application
+
+SpreadSheet is a modern, web-based spreadsheet application built with Next.js and React. It provides a familiar spreadsheet interface with features like formula support, cell references, and undo/redo functionality.
+
+## Features
+
+- 📊 Grid-based interface with rows and columns
+- 🔢 Formula support with cell references
+- 🔄 Undo/Redo functionality
+- 💾 Local storage persistence
+- ⌨️ Keyboard navigation
+- 🎨 Cell styling support
+- 📱 Responsive design
+
+## Tech Stack
+
+- **Frontend Framework**: Next.js 15.3.0
+- **UI Library**: React 19
+- **Language**: TypeScript
+- **Styling**: CSS Modules
+- **State Management**: React Context API with custom reducer
+
+## Project Structure
+
+```
+SpreadSheet/
+├── app/              # Next.js app directory
+├── context/          # React Context and Reducers
+│   ├── GridContext.tsx
+│   └── reducers/
+│       └── gridReducer.ts
+├── components/       # React components
+│   └── grid/        # Grid-related components
+├── utils/           # Utility functions
+├── types/           # TypeScript type definitions
+└── public/          # Static assets
+```
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   git clone https://github.com/yourusername/SpreadSheet.git
+   cd SpreadSheet
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Run the development server:
 
-## Learn More
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build the application for production
+- `npm run start` - Start the production server
+- `npm run lint` - Run ESLint
 
-## Deploy on Vercel
+## Key Features Implementation
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Grid State Management
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application uses a custom reducer pattern with React Context for state management. The grid state includes:
+
+- Cell data (content, formulas, references)
+- Grid dimensions (rows, columns)
+- History for undo/redo operations
+
+### Formula Support
+
+- Formulas start with `=` (e.g., `=A1+B1`)
+- Automatic reference tracking
+- Computed value updates
+
+### Keyboard Navigation
+
+- Arrow keys for cell navigation
+- Enter to edit cell content
+- Tab to move between cells
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
